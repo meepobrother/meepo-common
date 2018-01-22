@@ -18,6 +18,8 @@ props: Object = {
 
 - ngStart && ngEnd && ngTrue  双向绑定[()]
 
+> 用于第三方库如swiperjs等，判断dom渲染状态
+
 ```html
 <ul>
     <li *ngFor="let i of [1,2,3,4,5,6];last as l;">
