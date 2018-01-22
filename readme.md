@@ -14,7 +14,7 @@ props: Object = {
 </div>
 ```
 
-- ngStart && ngEnd && ngTrue
+- ngStart && ngEnd && ngTrue  双向绑定[()]
 
 ```html
 <ul>
@@ -32,7 +32,7 @@ props: Object = {
 
 <ul>
     <li *ngFor="let i of [1,2,3,4,5,6];index as i;">
-        <span [ngTrue]="i === 3" (ngTrue)="render3State($event)"></span>
+        <span [ngTrue]="i === 3" (ngTrueChange)="render3State($event)"></span>
     </li>
 </ul>
 
