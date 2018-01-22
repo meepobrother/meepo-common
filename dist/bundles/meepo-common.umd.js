@@ -1044,6 +1044,7 @@ function iterateListLike(obj, fn) {
 function isJsObject(o) {
     return o !== null && (typeof o === 'function' || typeof o === 'object');
 }
+var classNames = require('classnames');
 
 exports.MeepoCommonModule = MeepoCommonModule;
 exports.isMeepoTrue = isMeepoTrue;
@@ -1075,6 +1076,7 @@ exports.isListLikeIterable = isListLikeIterable;
 exports.areIterablesEqual = areIterablesEqual;
 exports.iterateListLike = iterateListLike;
 exports.isJsObject = isJsObject;
+exports.classNames = classNames;
 exports.ClassService = ClassService;
 exports.ComponentOutletService = ComponentOutletService;
 exports.HelperService = HelperService;

@@ -40,3 +40,5 @@ export declare function isListLikeIterable(obj: any): boolean;
 export declare function areIterablesEqual(a: any, b: any, comparator: (a: any, b: any) => boolean): boolean;
 export declare function iterateListLike(obj: any, fn: (p: any) => any): void;
 export declare function isJsObject(o: any): boolean;
+declare const classNames: any;
+export { classNames };

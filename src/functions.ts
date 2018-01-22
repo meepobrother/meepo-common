@@ -182,4 +182,6 @@ export function iterateListLike(obj: any, fn: (p: any) => any) {
 export function isJsObject(o: any): boolean {
     return o !== null && (typeof o === 'function' || typeof o === 'object');
 }
-
+declare const require;
+const classNames = require('classnames');
+export { classNames }
