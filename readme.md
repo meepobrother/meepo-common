@@ -118,4 +118,23 @@ export declare const isFinite: (number: number) => boolean;
 export declare function isNaN(value: any): boolean;
 export declare function isWindow(el: any): boolean;
 export declare function isDocument(el: any): boolean;
+export { isDevMode } from '@angular/core';
+export declare function isPromise(obj: any): obj is Promise<any>;
+export declare function isObservable(obj: any | Observable<any>): obj is Observable<any>;
+export declare function isType(v: any): v is Type<any>;
+export declare function isComponentView(view: any): boolean;
+export declare function isEmbeddedView(view: any): boolean;
+export declare function stringify(token: any): string;
+export declare function looseIdentical(a: any, b: any): boolean;
+export declare function getSymbolIterator(): string | symbol;
+export declare function isListLikeIterable(obj: any): boolean;
+export declare function areIterablesEqual(a: any, b: any, comparator: (a: any, b: any) => boolean): boolean;
+export declare function iterateListLike(obj: any, fn: (p: any) => any): void;
+export declare function isJsObject(o: any): boolean;
+```
+
+# global
+
+```ts
+import {global} from 'meepo-common';
 ```

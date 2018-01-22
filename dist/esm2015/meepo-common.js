@@ -747,6 +747,16 @@ MeepoCommonModule.ctorParameters = () => [];
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
+const __window = typeof window !== 'undefined' && window;
+const __self = typeof self !== 'undefined' && typeof WorkerGlobalScope !== 'undefined' &&
+    self instanceof WorkerGlobalScope && self;
+const __global = typeof global !== 'undefined' && global;
+const _global = __window || __global || __self;
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @param {?} val
  * @return {?}
@@ -866,6 +876,155 @@ function isWindow(el) {
 function isDocument(el) {
     return el.nodeType === 9;
 }
+/**
+ * @param {?} obj
+ * @return {?}
+ */
+function isPromise(obj) {
+    return !!obj && typeof obj.then === 'function';
+}
+/**
+ * @param {?} obj
+ * @return {?}
+ */
+function isObservable(obj) {
+    return !!obj && typeof obj.subscribe === 'function';
+}
+/**
+ * @param {?} v
+ * @return {?}
+ */
+function isType(v) {
+    return typeof v === 'function';
+}
+/**
+ * @param {?} view
+ * @return {?}
+ */
+function isComponentView(view) {
+    return !!view.parent && !!(/** @type {?} */ ((view.parentNodeDef)).flags & 1 << 15);
+}
+/**
+ * @param {?} view
+ * @return {?}
+ */
+function isEmbeddedView(view) {
+    return !!view.parent && !(/** @type {?} */ ((view.parentNodeDef)).flags & 1 << 15);
+}
+/**
+ * @param {?} token
+ * @return {?}
+ */
+function stringify(token) {
+    if (typeof token === 'string') {
+        return token;
+    }
+    if (token instanceof Array) {
+        return '[' + token.map(stringify).join(', ') + ']';
+    }
+    if (token == null) {
+        return '' + token;
+    }
+    if (token.overriddenName) {
+        return `${token.overriddenName}`;
+    }
+    if (token.name) {
+        return `${token.name}`;
+    }
+    const /** @type {?} */ res = token.toString();
+    if (res == null) {
+        return '' + res;
+    }
+    const /** @type {?} */ newLineIndex = res.indexOf('\n');
+    return newLineIndex === -1 ? res : res.substring(0, newLineIndex);
+}
+/**
+ * @param {?} a
+ * @param {?} b
+ * @return {?}
+ */
+function looseIdentical(a, b) {
+    return a === b || typeof a === 'number' && typeof b === 'number' && isNaN(a) && isNaN(b);
+}
+let _symbolIterator = null;
+/**
+ * @return {?}
+ */
+function getSymbolIterator() {
+    if (!_symbolIterator) {
+        const /** @type {?} */ Symbol = _global['Symbol'];
+        if (Symbol && Symbol.iterator) {
+            _symbolIterator = Symbol.iterator;
+        }
+        else {
+            // es6-shim specific logic
+            const /** @type {?} */ keys = Object.getOwnPropertyNames(Map.prototype);
+            for (let /** @type {?} */ i = 0; i < keys.length; ++i) {
+                const /** @type {?} */ key = keys[i];
+                if (key !== 'entries' && key !== 'size' &&
+                    (/** @type {?} */ (Map)).prototype[key] === Map.prototype['entries']) {
+                    _symbolIterator = key;
+                }
+            }
+        }
+    }
+    return _symbolIterator;
+}
+/**
+ * @param {?} obj
+ * @return {?}
+ */
+function isListLikeIterable(obj) {
+    if (!isJsObject(obj))
+        return false;
+    return Array.isArray(obj) || (!(obj instanceof Map) && getSymbolIterator() in obj);
+}
+/**
+ * @param {?} a
+ * @param {?} b
+ * @param {?} comparator
+ * @return {?}
+ */
+function areIterablesEqual(a, b, comparator) {
+    const /** @type {?} */ iterator1 = a[getSymbolIterator()]();
+    const /** @type {?} */ iterator2 = b[getSymbolIterator()]();
+    while (true) {
+        const /** @type {?} */ item1 = iterator1.next();
+        const /** @type {?} */ item2 = iterator2.next();
+        if (item1.done && item2.done)
+            return true;
+        if (item1.done || item2.done)
+            return false;
+        if (!comparator(item1.value, item2.value))
+            return false;
+    }
+}
+/**
+ * @param {?} obj
+ * @param {?} fn
+ * @return {?}
+ */
+function iterateListLike(obj, fn) {
+    if (Array.isArray(obj)) {
+        for (let /** @type {?} */ i = 0; i < obj.length; i++) {
+            fn(obj[i]);
+        }
+    }
+    else {
+        const /** @type {?} */ iterator = obj[getSymbolIterator()]();
+        let /** @type {?} */ item;
+        while (!((item = iterator.next()).done)) {
+            fn(item.value);
+        }
+    }
+}
+/**
+ * @param {?} o
+ * @return {?}
+ */
+function isJsObject(o) {
+    return o !== null && (typeof o === 'function' || typeof o === 'object');
+}
 
 /**
  * @fileoverview added by tsickle
@@ -880,7 +1039,7 @@ function isDocument(el) {
  * Generated bundle index. Do not edit.
  */
 
-export { MeepoCommonModule, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, ClassService, ComponentOutletService, HelperService, HelpersService, StyleService, TemplateOutletService, NgEachOf as ɵb, NgEachOfContext as ɵa, NgEndDirective as ɵd, NgStartDirective as ɵc, NgTrueDirective as ɵe, ClassService as ɵg, HelpersService as ɵf, StyleService as ɵh };
+export { MeepoCommonModule, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, isPromise, isObservable, isType, isComponentView, isEmbeddedView, stringify, looseIdentical, getSymbolIterator, isListLikeIterable, areIterablesEqual, iterateListLike, isJsObject, ClassService, ComponentOutletService, HelperService, HelpersService, StyleService, TemplateOutletService, _global as global, NgEachOf as ɵb, NgEachOfContext as ɵa, NgEndDirective as ɵd, NgStartDirective as ɵc, NgTrueDirective as ɵe, ClassService as ɵg, HelpersService as ɵf, StyleService as ɵh };
 export { of } from 'rxjs/observable/of';
 export { empty } from 'rxjs/observable/empty';
 export { from } from 'rxjs/observable/from';
@@ -899,4 +1058,5 @@ export { zip } from 'rxjs/observable/zip';
 export { Scheduler } from 'rxjs/Scheduler';
 export { Subject } from 'rxjs/Subject';
 export { Observable } from 'rxjs/Observable';
+export { isDevMode } from '@angular/core';
 //# sourceMappingURL=meepo-common.js.map

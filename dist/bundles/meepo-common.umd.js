@@ -767,6 +767,15 @@ MeepoCommonModule.ctorParameters = function () { return []; };
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
+var __window = typeof window !== 'undefined' && window;
+var __self = typeof self !== 'undefined' && typeof WorkerGlobalScope !== 'undefined' &&
+    self instanceof WorkerGlobalScope && self;
+var __global = typeof global !== 'undefined' && global;
+var _global = __window || __global || __self;
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @param {?} val
  * @return {?}
@@ -886,6 +895,155 @@ function isWindow(el) {
 function isDocument(el) {
     return el.nodeType === 9;
 }
+/**
+ * @param {?} obj
+ * @return {?}
+ */
+function isPromise(obj) {
+    return !!obj && typeof obj.then === 'function';
+}
+/**
+ * @param {?} obj
+ * @return {?}
+ */
+function isObservable(obj) {
+    return !!obj && typeof obj.subscribe === 'function';
+}
+/**
+ * @param {?} v
+ * @return {?}
+ */
+function isType(v) {
+    return typeof v === 'function';
+}
+/**
+ * @param {?} view
+ * @return {?}
+ */
+function isComponentView(view) {
+    return !!view.parent && !!(((view.parentNodeDef)).flags & 1 << 15);
+}
+/**
+ * @param {?} view
+ * @return {?}
+ */
+function isEmbeddedView(view) {
+    return !!view.parent && !(((view.parentNodeDef)).flags & 1 << 15);
+}
+/**
+ * @param {?} token
+ * @return {?}
+ */
+function stringify(token) {
+    if (typeof token === 'string') {
+        return token;
+    }
+    if (token instanceof Array) {
+        return '[' + token.map(stringify).join(', ') + ']';
+    }
+    if (token == null) {
+        return '' + token;
+    }
+    if (token.overriddenName) {
+        return "" + token.overriddenName;
+    }
+    if (token.name) {
+        return "" + token.name;
+    }
+    var /** @type {?} */ res = token.toString();
+    if (res == null) {
+        return '' + res;
+    }
+    var /** @type {?} */ newLineIndex = res.indexOf('\n');
+    return newLineIndex === -1 ? res : res.substring(0, newLineIndex);
+}
+/**
+ * @param {?} a
+ * @param {?} b
+ * @return {?}
+ */
+function looseIdentical(a, b) {
+    return a === b || typeof a === 'number' && typeof b === 'number' && isNaN(a) && isNaN(b);
+}
+var _symbolIterator = null;
+/**
+ * @return {?}
+ */
+function getSymbolIterator() {
+    if (!_symbolIterator) {
+        var /** @type {?} */ Symbol = _global['Symbol'];
+        if (Symbol && Symbol.iterator) {
+            _symbolIterator = Symbol.iterator;
+        }
+        else {
+            // es6-shim specific logic
+            var /** @type {?} */ keys = Object.getOwnPropertyNames(Map.prototype);
+            for (var /** @type {?} */ i = 0; i < keys.length; ++i) {
+                var /** @type {?} */ key = keys[i];
+                if (key !== 'entries' && key !== 'size' &&
+                    ((Map)).prototype[key] === Map.prototype['entries']) {
+                    _symbolIterator = key;
+                }
+            }
+        }
+    }
+    return _symbolIterator;
+}
+/**
+ * @param {?} obj
+ * @return {?}
+ */
+function isListLikeIterable(obj) {
+    if (!isJsObject(obj))
+        return false;
+    return Array.isArray(obj) || (!(obj instanceof Map) && getSymbolIterator() in obj);
+}
+/**
+ * @param {?} a
+ * @param {?} b
+ * @param {?} comparator
+ * @return {?}
+ */
+function areIterablesEqual(a, b, comparator) {
+    var /** @type {?} */ iterator1 = a[getSymbolIterator()]();
+    var /** @type {?} */ iterator2 = b[getSymbolIterator()]();
+    while (true) {
+        var /** @type {?} */ item1 = iterator1.next();
+        var /** @type {?} */ item2 = iterator2.next();
+        if (item1.done && item2.done)
+            return true;
+        if (item1.done || item2.done)
+            return false;
+        if (!comparator(item1.value, item2.value))
+            return false;
+    }
+}
+/**
+ * @param {?} obj
+ * @param {?} fn
+ * @return {?}
+ */
+function iterateListLike(obj, fn) {
+    if (Array.isArray(obj)) {
+        for (var /** @type {?} */ i = 0; i < obj.length; i++) {
+            fn(obj[i]);
+        }
+    }
+    else {
+        var /** @type {?} */ iterator = obj[getSymbolIterator()]();
+        var /** @type {?} */ item = void 0;
+        while (!((item = iterator.next()).done)) {
+            fn(item.value);
+        }
+    }
+}
+/**
+ * @param {?} o
+ * @return {?}
+ */
+function isJsObject(o) {
+    return o !== null && (typeof o === 'function' || typeof o === 'object');
+}
 
 exports.MeepoCommonModule = MeepoCommonModule;
 exports.isMeepoTrue = isMeepoTrue;
@@ -905,12 +1063,25 @@ exports.isFinite = isFinite;
 exports.isNaN = isNaN;
 exports.isWindow = isWindow;
 exports.isDocument = isDocument;
+exports.isPromise = isPromise;
+exports.isObservable = isObservable;
+exports.isType = isType;
+exports.isComponentView = isComponentView;
+exports.isEmbeddedView = isEmbeddedView;
+exports.stringify = stringify;
+exports.looseIdentical = looseIdentical;
+exports.getSymbolIterator = getSymbolIterator;
+exports.isListLikeIterable = isListLikeIterable;
+exports.areIterablesEqual = areIterablesEqual;
+exports.iterateListLike = iterateListLike;
+exports.isJsObject = isJsObject;
 exports.ClassService = ClassService;
 exports.ComponentOutletService = ComponentOutletService;
 exports.HelperService = HelperService;
 exports.HelpersService = HelpersService;
 exports.StyleService = StyleService;
 exports.TemplateOutletService = TemplateOutletService;
+exports.global = _global;
 exports.ɵb = NgEachOf;
 exports.ɵa = NgEachOfContext;
 exports.ɵd = NgEndDirective;
@@ -937,6 +1108,7 @@ exports.zip = zip.zip;
 exports.Scheduler = Scheduler.Scheduler;
 exports.Subject = Subject.Subject;
 exports.Observable = Observable.Observable;
+exports.isDevMode = core.isDevMode;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
