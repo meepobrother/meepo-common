@@ -1,4 +1,4 @@
-import { Directive, Input, KeyValueDiffers, NgModule, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Injectable, Input, IterableDiffers, KeyValueDiffers, NgModule, NgModuleRef, Output, Renderer2, TemplateRef, ViewContainerRef, ɵisListLikeIterable } from '@angular/core';
 
 
 
@@ -166,15 +166,572 @@ class RecordViewTuple {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
+class NgStartDirective {
+    constructor() {
+        this.ngStartChange = new EventEmitter();
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        if (this.ngStart) {
+            this.ngStartChange.emit(this.ngStart);
+        }
+    }
+}
+NgStartDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[ngStart]'
+            },] },
+];
+/** @nocollapse */
+NgStartDirective.ctorParameters = () => [];
+NgStartDirective.propDecorators = {
+    "ngStart": [{ type: Input },],
+    "ngStartChange": [{ type: Output },],
+};
+class NgEndDirective {
+    constructor() {
+        this.ngEndChange = new EventEmitter();
+    }
+    /**
+     * @return {?}
+     */
+    ngAfterViewInit() {
+        if (this.ngEnd) {
+            this.ngEndChange.emit(this.ngEnd);
+        }
+    }
+}
+NgEndDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[ngEnd]'
+            },] },
+];
+/** @nocollapse */
+NgEndDirective.ctorParameters = () => [];
+NgEndDirective.propDecorators = {
+    "ngEnd": [{ type: Input },],
+    "ngEndChange": [{ type: Output },],
+};
+class NgTrueDirective {
+    constructor() {
+        this.ngTrueChange = new EventEmitter();
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        if (this.ngTrue) {
+            this.ngTrueChange.emit(true);
+        }
+    }
+    /**
+     * @return {?}
+     */
+    ngAfterViewInit() {
+        if (this.ngTrue) {
+            this.ngTrueChange.emit(true);
+        }
+    }
+}
+NgTrueDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[ngTrue]'
+            },] },
+];
+/** @nocollapse */
+NgTrueDirective.ctorParameters = () => [];
+NgTrueDirective.propDecorators = {
+    "ngTrue": [{ type: Input },],
+    "ngTrueChange": [{ type: Output },],
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+class ClassService {
+    /**
+     * @param {?} _iterableDiffers
+     * @param {?} _keyValueDiffers
+     * @param {?} _ngEl
+     * @param {?} _renderer
+     */
+    constructor(_iterableDiffers, _keyValueDiffers, _ngEl, _renderer) {
+        this._iterableDiffers = _iterableDiffers;
+        this._keyValueDiffers = _keyValueDiffers;
+        this._ngEl = _ngEl;
+        this._renderer = _renderer;
+        this._initialClasses = [];
+    }
+    /**
+     * @param {?} v
+     * @return {?}
+     */
+    set klass(v) {
+        this._applyInitialClasses(true);
+        this._initialClasses = typeof v === 'string' ? v.split(/\s+/) : [];
+        this._applyInitialClasses(false);
+        this._applyClasses(this._rawClass, false);
+    }
+    /**
+     * @param {?} v
+     * @return {?}
+     */
+    set ngClass(v) {
+        this._cleanupClasses(this._rawClass);
+        this._iterableDiffer = null;
+        this._keyValueDiffer = null;
+        this._rawClass = typeof v === 'string' ? v.split(/\s+/) : v;
+        if (this._rawClass) {
+            if (ɵisListLikeIterable(this._rawClass)) {
+                this._iterableDiffer = this._iterableDiffers.find(this._rawClass).create();
+                this.ngDoCheck();
+            }
+            else {
+                this._keyValueDiffer = this._keyValueDiffers.find(this._rawClass).create();
+                this.ngDoCheck();
+            }
+        }
+    }
+    /**
+     * @return {?}
+     */
+    ngDoCheck() {
+        if (this._iterableDiffer) {
+            const /** @type {?} */ iterableChanges = this._iterableDiffer.diff(/** @type {?} */ (this._rawClass));
+            if (iterableChanges) {
+                this._applyIterableChanges(iterableChanges);
+            }
+        }
+        else if (this._keyValueDiffer) {
+            const /** @type {?} */ keyValueChanges = this._keyValueDiffer.diff(/** @type {?} */ (this._rawClass));
+            if (keyValueChanges) {
+                this._applyKeyValueChanges(keyValueChanges);
+            }
+        }
+    }
+    /**
+     * @param {?} rawClassVal
+     * @return {?}
+     */
+    _cleanupClasses(rawClassVal) {
+        this._applyClasses(rawClassVal, true);
+        this._applyInitialClasses(false);
+    }
+    /**
+     * @param {?} changes
+     * @return {?}
+     */
+    _applyKeyValueChanges(changes) {
+        changes.forEachAddedItem((record) => this._toggleClass(record.key, record.currentValue));
+        changes.forEachChangedItem((record) => this._toggleClass(record.key, record.currentValue));
+        changes.forEachRemovedItem((record) => {
+            if (record.previousValue) {
+                this._toggleClass(record.key, false);
+            }
+        });
+    }
+    /**
+     * @param {?} changes
+     * @return {?}
+     */
+    _applyIterableChanges(changes) {
+        changes.forEachAddedItem((record) => {
+            if (typeof record.item === 'string') {
+                this._toggleClass(record.item, true);
+            }
+            else {
+                throw new Error(`NgClass AntdClassService`);
+            }
+        });
+        changes.forEachRemovedItem((record) => this._toggleClass(record.item, false));
+    }
+    /**
+     * @param {?} isCleanup
+     * @return {?}
+     */
+    _applyInitialClasses(isCleanup) {
+        this._initialClasses.forEach(klass => this._toggleClass(klass, !isCleanup));
+    }
+    /**
+     * @param {?} rawClassVal
+     * @param {?} isCleanup
+     * @return {?}
+     */
+    _applyClasses(rawClassVal, isCleanup) {
+        if (rawClassVal) {
+            if (Array.isArray(rawClassVal) || rawClassVal instanceof Set) {
+                (/** @type {?} */ (rawClassVal)).forEach((klass) => this._toggleClass(klass, !isCleanup));
+            }
+            else {
+                Object.keys(rawClassVal).forEach(klass => {
+                    if (rawClassVal[klass] != null)
+                        this._toggleClass(klass, !isCleanup);
+                });
+            }
+        }
+    }
+    /**
+     * @param {?} klass
+     * @param {?} enabled
+     * @return {?}
+     */
+    _toggleClass(klass, enabled) {
+        klass = klass.trim();
+        if (klass) {
+            klass.split(/\s+/g).forEach(klass => {
+                if (enabled) {
+                    this._renderer.addClass(this._ngEl.nativeElement, klass);
+                }
+                else {
+                    this._renderer.removeClass(this._ngEl.nativeElement, klass);
+                }
+            });
+        }
+    }
+}
+ClassService.decorators = [
+    { type: Injectable },
+];
+/** @nocollapse */
+ClassService.ctorParameters = () => [
+    { type: IterableDiffers, },
+    { type: KeyValueDiffers, },
+    { type: ElementRef, },
+    { type: Renderer2, },
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+class ComponentOutletService {
+    /**
+     * @param {?} _viewContainerRef
+     */
+    constructor(_viewContainerRef) {
+        this._viewContainerRef = _viewContainerRef;
+        this._componentRef = null;
+        this._moduleRef = null;
+    }
+    /**
+     * @param {?} ngComponentOutlet
+     * @param {?=} ngComponentOutletInjector
+     * @param {?=} ngComponentOutletContent
+     * @param {?=} ngComponentOutletNgModuleFactory
+     * @return {?}
+     */
+    create(ngComponentOutlet, ngComponentOutletInjector, ngComponentOutletContent, ngComponentOutletNgModuleFactory) {
+        this._viewContainerRef.clear();
+        this._componentRef = null;
+        if (ngComponentOutlet) {
+            const /** @type {?} */ elInjector = ngComponentOutletInjector || this._viewContainerRef.parentInjector;
+            if (this._moduleRef)
+                this._moduleRef.destroy();
+            if (ngComponentOutletNgModuleFactory) {
+                const /** @type {?} */ parentModule = elInjector.get(NgModuleRef);
+                this._moduleRef = ngComponentOutletNgModuleFactory.create(parentModule.injector);
+            }
+            else {
+                this._moduleRef = null;
+            }
+            const /** @type {?} */ componentFactoryResolver = this._moduleRef ? this._moduleRef.componentFactoryResolver : elInjector.get(ComponentFactoryResolver);
+            const /** @type {?} */ componentFactory = componentFactoryResolver.resolveComponentFactory(ngComponentOutlet);
+            this._componentRef = this._viewContainerRef.createComponent(componentFactory, this._viewContainerRef.length, elInjector, ngComponentOutletContent);
+            return this._componentRef;
+        }
+        return null;
+    }
+    /**
+     * @return {?}
+     */
+    update() { }
+    /**
+     * @return {?}
+     */
+    destroy() {
+        if (this._moduleRef)
+            this._moduleRef.destroy();
+    }
+}
+ComponentOutletService.decorators = [
+    { type: Injectable },
+];
+/** @nocollapse */
+ComponentOutletService.ctorParameters = () => [
+    { type: ViewContainerRef, },
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+class TemplateOutletService {
+    /**
+     * @param {?} _viewContainerRef
+     */
+    constructor(_viewContainerRef) {
+        this._viewContainerRef = _viewContainerRef;
+    }
+    /**
+     * @param {?} tpl
+     * @param {?} context
+     * @return {?}
+     */
+    create(tpl, context) {
+        if (this._viewRef) {
+            this.destroy();
+        }
+        if (tpl) {
+            this._viewRef = this._viewContainerRef.createEmbeddedView(tpl, context);
+            return this._viewRef;
+        }
+        return null;
+    }
+    /**
+     * @param {?} ctx
+     * @return {?}
+     */
+    update(ctx) {
+        for (let /** @type {?} */ propName of Object.keys(ctx)) {
+            (/** @type {?} */ (this._viewRef.context))[propName] = (/** @type {?} */ (ctx))[propName];
+        }
+    }
+    /**
+     * @return {?}
+     */
+    destroy() {
+        const /** @type {?} */ index = this._viewContainerRef.indexOf(this._viewRef);
+        if (index >= 0) {
+            this._viewContainerRef.remove(index);
+        }
+    }
+}
+TemplateOutletService.decorators = [
+    { type: Injectable },
+];
+/** @nocollapse */
+TemplateOutletService.ctorParameters = () => [
+    { type: ViewContainerRef, },
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+class HelperService {
+    /**
+     * @param {?} _viewContainerRef
+     */
+    constructor(_viewContainerRef) {
+        this._viewContainerRef = _viewContainerRef;
+        this._templateCreator = new TemplateOutletService(_viewContainerRef);
+        this._componentCreator = new ComponentOutletService(_viewContainerRef);
+    }
+    /**
+     * @param {?} tpl
+     * @param {?=} context
+     * @return {?}
+     */
+    createTemplate(tpl, context) {
+        this._templateCreator.create(tpl, context);
+    }
+    /**
+     * @param {?} component
+     * @param {?=} injector
+     * @param {?=} content
+     * @param {?=} ngModel
+     * @return {?}
+     */
+    createComponent(component, injector, content, ngModel) {
+        this._componentCreator.create(component, injector, content, ngModel);
+    }
+    /**
+     * @return {?}
+     */
+    destory() {
+        this._templateCreator.destroy();
+        this._componentCreator.destroy();
+    }
+}
+HelperService.decorators = [
+    { type: Injectable },
+];
+/** @nocollapse */
+HelperService.ctorParameters = () => [
+    { type: ViewContainerRef, },
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+class HelpersService {
+    /**
+     * @param {?} _viewContainerRef
+     */
+    constructor(_viewContainerRef) {
+        this._viewContainerRef = _viewContainerRef;
+        this.components = [];
+        this.templates = [];
+    }
+    /**
+     * @param {?} component
+     * @param {?=} injector
+     * @param {?=} content
+     * @param {?=} ngModel
+     * @return {?}
+     */
+    addComponent(component, injector, content, ngModel) {
+        const /** @type {?} */ helper = new HelperService(this._viewContainerRef);
+        helper.createComponent(component, injector, content, ngModel);
+        this.components.push(helper);
+        return helper;
+    }
+    /**
+     * @param {?} tpl
+     * @param {?=} context
+     * @return {?}
+     */
+    addTemplate(tpl, context) {
+        const /** @type {?} */ helper = new HelperService(this._viewContainerRef);
+        helper.createTemplate(tpl, context);
+        this.templates.push(helper);
+        return helper;
+    }
+    /**
+     * @param {?=} components
+     * @return {?}
+     */
+    addComponents(components = []) {
+        components.map((res) => {
+            this.addComponent(res.component, res.injector, res.content, res.ngModel);
+        });
+    }
+    /**
+     * @param {?=} tpls
+     * @return {?}
+     */
+    addTemplates(tpls = []) {
+        tpls.map((res) => {
+            this.addTemplate(res.tpl, res.context);
+        });
+    }
+}
+HelpersService.decorators = [
+    { type: Injectable },
+];
+/** @nocollapse */
+HelpersService.ctorParameters = () => [
+    { type: ViewContainerRef, },
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+class StyleService {
+    /**
+     * @param {?} _differs
+     * @param {?} _ngEl
+     * @param {?} _renderer
+     */
+    constructor(_differs, _ngEl, _renderer) {
+        this._differs = _differs;
+        this._ngEl = _ngEl;
+        this._renderer = _renderer;
+    }
+    /**
+     * @param {?} v
+     * @return {?}
+     */
+    set ngStyle(v) {
+        this._ngStyle = v;
+        if (!this._differ && v) {
+            this._differ = this._differs.find(v).create();
+            this.ngDoCheck();
+        }
+    }
+    /**
+     * @return {?}
+     */
+    ngDoCheck() {
+        if (this._differ) {
+            const /** @type {?} */ changes = this._differ.diff(this._ngStyle);
+            if (changes) {
+                this._applyChanges(changes);
+            }
+        }
+    }
+    /**
+     * @param {?} changes
+     * @return {?}
+     */
+    _applyChanges(changes) {
+        changes.forEachRemovedItem((record) => this._setStyle(record.key, null));
+        changes.forEachAddedItem((record) => this._setStyle(record.key, record.currentValue));
+        changes.forEachChangedItem((record) => this._setStyle(record.key, record.currentValue));
+    }
+    /**
+     * @param {?} nameAndUnit
+     * @param {?} value
+     * @return {?}
+     */
+    _setStyle(nameAndUnit, value) {
+        const [name, unit] = nameAndUnit.split('.');
+        value = value != null && unit ? `${value}${unit}` : value;
+        this._renderer.setStyle(this._ngEl.nativeElement, name, /** @type {?} */ (value));
+    }
+}
+StyleService.decorators = [
+    { type: Injectable },
+];
+/** @nocollapse */
+StyleService.ctorParameters = () => [
+    { type: KeyValueDiffers, },
+    { type: ElementRef, },
+    { type: Renderer2, },
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 class MeepoCommonModule {
 }
 MeepoCommonModule.decorators = [
     { type: NgModule, args: [{
                 exports: [
-                    NgEachOf
+                    NgEachOf,
+                    NgStartDirective,
+                    NgEndDirective,
+                    NgTrueDirective
                 ],
                 declarations: [
-                    NgEachOf
+                    NgEachOf,
+                    NgStartDirective,
+                    NgEndDirective,
+                    NgTrueDirective
+                ],
+                providers: [
+                    HelpersService,
+                    ClassService,
+                    StyleService
                 ]
             },] },
 ];
@@ -323,7 +880,7 @@ function isDocument(el) {
  * Generated bundle index. Do not edit.
  */
 
-export { MeepoCommonModule, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, NgEachOf as ɵb, NgEachOfContext as ɵa };
+export { MeepoCommonModule, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, ClassService, ComponentOutletService, HelperService, HelpersService, StyleService, TemplateOutletService, NgEachOf as ɵb, NgEachOfContext as ɵa, NgEndDirective as ɵd, NgStartDirective as ɵc, NgTrueDirective as ɵe, ClassService as ɵg, HelpersService as ɵf, StyleService as ɵh };
 export { of } from 'rxjs/observable/of';
 export { empty } from 'rxjs/observable/empty';
 export { from } from 'rxjs/observable/from';
