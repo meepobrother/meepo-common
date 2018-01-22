@@ -29,19 +29,21 @@ export class HelpersService {
         injector?: Injector,
         content?: any[][],
         ngModel?: NgModuleFactory<any>
-    ) {
+    ): HelperService {
         const helper = new HelperService(this._viewContainerRef);
         helper.createComponent(component, injector, content, ngModel);
         this.components.push(helper);
+        return helper;
     }
 
     addTemplate(
         tpl: TemplateRef<any>,
         context?: Object
-    ) {
+    ): HelperService {
         const helper = new HelperService(this._viewContainerRef);
         helper.createTemplate(tpl, context);
         this.templates.push(helper);
+        return helper;
     }
 
     addComponents(components: AddComponentProps[] = []) {

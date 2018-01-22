@@ -56,3 +56,29 @@ render3State(e: boolean){
 }
 
 ```
+
+
+```ts
+constructor(public helper: HelpersService){}
+
+addComponentRef(
+    component: Type<any>,
+    injector?: Injector,
+    content?: any[][],
+    ngModel?: NgModuleFactory<any>
+){
+    const helper = this.helper.addComponent(component,injector,content,ngModel);
+
+    // helper.destory() 删除组件
+}
+
+addTemplateRef(
+    tpl: TemplateRef<any>,
+    context?: Object
+){
+    const helper = this.helper.addTemplate(tpl,context);
+
+    // helper.destory() 删除template
+}
+
+```
