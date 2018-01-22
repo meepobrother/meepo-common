@@ -1,0 +1,17 @@
+{
+  "name": "meepo-common",
+  "version": "1.0.6",
+  "repository": "https://github.com/meepobrother/meepo-common.git",
+  "author": "imeepos <1037483576@qq.com>",
+  "license": "MIT",
+  "private": false,
+  "peerDependencies": {
+    "@angular/core": "*",
+    "rxjs": "*"
+  },
+  "main": "bundles/meepo-common.umd.js",
+  "module": "esm5/meepo-common.js",
+  "es2015": "esm2015/meepo-common.js",
+  "typings": "meepo-common.d.ts",
+  "metadata": "meepo-common.metadata.json"
+}
