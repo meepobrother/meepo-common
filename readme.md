@@ -57,6 +57,7 @@ render3State(e: boolean){
 
 ```
 
+- helpersService 增减动态组件服务
 
 ```ts
 constructor(public helper: HelpersService){}
