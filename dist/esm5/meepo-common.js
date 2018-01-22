@@ -179,13 +179,136 @@ MeepoCommonModule.ctorParameters = function () { return []; };
  * @suppress {checkTypes} checked by tsc
  */
 /**
+ * @param {?} val
+ * @return {?}
+ */
+function isMeepoTrue(val) {
+    return isTrueProperty(val);
+}
+/**
+ * @param {?} val
+ * @return {?}
+ */
+function isTrueProperty(val) {
+    if (typeof val === 'string') {
+        val = val.toLowerCase().trim();
+        return (val === 'true' || val === 'on' || val === '');
+    }
+    return !!val;
+}
+/**
+ * @param {?} a
+ * @param {?} b
+ * @return {?}
+ */
+function isCheckedProperty(a, b) {
+    if (a === undefined || a === null || a === '') {
+        return (b === undefined || b === null || b === '');
+    }
+    else if (a === true || a === 'true') {
+        return (b === true || b === 'true');
+    }
+    else if (a === false || a === 'false') {
+        return (b === false || b === 'false');
+    }
+    else if (a === 0 || a === '0') {
+        return (b === 0 || b === '0');
+    }
+    // not using strict comparison on purpose
+    return (a == b); // tslint:disable-line
+}
+/**
+ * @hidden
+ * @param {?} val
+ * @return {?}
+ */
+function isBoolean(val) { return typeof val === 'boolean'; }
+/**
+ * @hidden
+ * @param {?} val
+ * @return {?}
+ */
+function isString(val) { return typeof val === 'string'; }
+/**
+ * @hidden
+ * @param {?} val
+ * @return {?}
+ */
+function isNumber(val) { return typeof val === 'number'; }
+/**
+ * @hidden
+ * @param {?} val
+ * @return {?}
+ */
+function isFunction(val) { return typeof val === 'function'; }
+/**
+ * @hidden
+ * @param {?} val
+ * @return {?}
+ */
+function isDefined(val) { return typeof val !== 'undefined'; }
+/**
+ * @hidden
+ * @param {?} val
+ * @return {?}
+ */
+function isUndefined(val) { return typeof val === 'undefined'; }
+/**
+ * @hidden
+ * @param {?} val
+ * @return {?}
+ */
+function isPresent(val) { return val !== undefined && val !== null; }
+/**
+ * @hidden
+ * @param {?} val
+ * @return {?}
+ */
+function isBlank(val) { return val === undefined || val === null; }
+/**
+ * @hidden
+ * @param {?} val
+ * @return {?}
+ */
+function isObject(val) { return typeof val === 'object'; }
+/**
+ * @hidden
+ */
+var isArray = Array.isArray;
+var isFinite = Number.isFinite;
+/**
+ * @param {?} value
+ * @return {?}
+ */
+function isNaN(value) {
+    return isNumber(value) && value !== +value;
+}
+/**
+ * @param {?} el
+ * @return {?}
+ */
+function isWindow(el) {
+    return el !== null && el === el.window;
+}
+/**
+ * @param {?} el
+ * @return {?}
+ */
+function isDocument(el) {
+    return el.nodeType === 9;
+}
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
 /**
  * Generated bundle index. Do not edit.
  */
-export { MeepoCommonModule, NgEachOf as ɵb, NgEachOfContext as ɵa };
+export { MeepoCommonModule, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, NgEachOf as ɵb, NgEachOfContext as ɵa };
 export { of } from 'rxjs/observable/of';
 export { empty } from 'rxjs/observable/empty';
 export { from } from 'rxjs/observable/from';
