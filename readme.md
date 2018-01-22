@@ -1,6 +1,6 @@
-### common
+# common module
 
-# directive
+### directive
 
 - ngEach
 
@@ -59,7 +59,7 @@ render3State(e: boolean){
 
 ```
 
-# services
+### services
 
 - helpersService 增减动态组件服务
 
@@ -88,7 +88,7 @@ addTemplateRef(
 
 ```
 
-# functions
+### functions
 
 ```ts
 export declare function isMeepoTrue(val: any): boolean;
@@ -133,7 +133,7 @@ export declare function iterateListLike(obj: any, fn: (p: any) => any): void;
 export declare function isJsObject(o: any): boolean;
 ```
 
-# global
+### global
 
 ```ts
 import {global} from 'meepo-common';
