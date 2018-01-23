@@ -1,19 +1,4 @@
-import { ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Injectable, Input, IterableDiffers, KeyValueDiffers, NgModule, NgModuleRef, Output, Renderer2, TemplateRef, ViewContainerRef, ɵisListLikeIterable } from '@angular/core';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import { ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Host, Injectable, Input, IterableDiffers, KeyValueDiffers, NgModule, NgModuleRef, Output, Renderer2, TemplateRef, ViewContainerRef, ɵisListLikeIterable } from '@angular/core';
 import 'rxjs/add/operator/debounce';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -45,6 +30,36 @@ import 'rxjs/add/operator/switchMapTo';
 import 'rxjs/add/operator/every';
 import 'rxjs/add/operator/defaultIfEmpty';
 import 'rxjs/add/operator/do';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -633,7 +648,7 @@ HelpersService.decorators = [
 ];
 /** @nocollapse */
 HelpersService.ctorParameters = () => [
-    { type: ViewContainerRef, },
+    { type: ViewContainerRef, decorators: [{ type: Host },] },
 ];
 
 /**
@@ -1041,6 +1056,20 @@ const classNames = require('classnames');
  */
 
 export { MeepoCommonModule, ClassService, ComponentOutletService, HelperService, HelpersService, StyleService, TemplateOutletService, _global as global, NgEachOf, NgEachOfContext, NgTrueDirective, NgStartDirective, NgEndDirective, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, isPromise, isObservable, isType, isComponentView, isEmbeddedView, stringify, looseIdentical, getSymbolIterator, isListLikeIterable, areIterablesEqual, iterateListLike, isJsObject, classNames };
+export { Scheduler } from 'rxjs/Scheduler';
+export { Subject } from 'rxjs/Subject';
+export { BehaviorSubject } from 'rxjs/BehaviorSubject';
+export { Observable } from 'rxjs/Observable';
+export { Subscription } from 'rxjs/Subscription';
+export { ConnectableObservable } from 'rxjs/observable/ConnectableObservable';
+export { switchMap } from 'rxjs/operator/switchMap';
+export { _catch } from 'rxjs/operator/catch';
+export { concatAll } from 'rxjs/operator/concatAll';
+export { first } from 'rxjs/operator/first';
+export { map } from 'rxjs/operator/map';
+export { mergeMap } from 'rxjs/operator/mergeMap';
+export { EmptyError } from 'rxjs/util/EmptyError';
+export { filter } from 'rxjs/operator/filter';
 export { of } from 'rxjs/observable/of';
 export { empty } from 'rxjs/observable/empty';
 export { from } from 'rxjs/observable/from';
@@ -1056,8 +1085,9 @@ export { forkJoin } from 'rxjs/observable/forkJoin';
 export { merge } from 'rxjs/observable/merge';
 export { race } from 'rxjs/observable/race';
 export { zip } from 'rxjs/observable/zip';
-export { Scheduler } from 'rxjs/Scheduler';
-export { Subject } from 'rxjs/Subject';
-export { Observable } from 'rxjs/Observable';
+export { concatMap } from 'rxjs/operator/concatMap';
+export { every } from 'rxjs/operator/every';
+export { last } from 'rxjs/operator/last';
+export { reduce } from 'rxjs/operator/reduce';
 export { isDevMode } from '@angular/core';
 //# sourceMappingURL=meepo-common.js.map

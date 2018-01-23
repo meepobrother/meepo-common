@@ -1,6 +1,7 @@
 import {
     Injectable, ViewContainerRef, Type,
-    NgModuleFactory, Injector, TemplateRef
+    NgModuleFactory, Injector, TemplateRef,
+    Host
 } from '@angular/core';
 import { HelperService } from './helper';
 
@@ -16,12 +17,11 @@ export interface AddTemplateProps {
     context?: Object
 }
 
-@Injectable()
 export class HelpersService {
     components: any[] = [];
     templates: any[] = [];
     constructor(
-        private _viewContainerRef: ViewContainerRef
+        @Host() private _viewContainerRef: ViewContainerRef
     ) { }
 
     addComponent(

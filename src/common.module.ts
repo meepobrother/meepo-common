@@ -2,7 +2,7 @@ import { NgModule, ViewContainerRef } from '@angular/core';
 import { NgEachOf } from './ng-each-of';
 import { NgEndDirective, NgStartDirective, NgTrueDirective } from './ng-true';
 
-import { ClassService, StyleService, HelpersService } from './services';
+import { ClassService, StyleService } from './services';
 
 @NgModule({
     exports: [
@@ -18,7 +18,6 @@ import { ClassService, StyleService, HelpersService } from './services';
         NgTrueDirective
     ],
     providers: [
-        HelpersService,
         ClassService,
         StyleService
     ]

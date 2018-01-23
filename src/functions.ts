@@ -185,3 +185,24 @@ export function isJsObject(o: any): boolean {
 declare const require;
 const classNames = require('classnames');
 export { classNames }
+
+export function ansycClassObj(obj: any, srtClassName: string = '') {
+    for (const key in obj) {
+        srtClassName += obj[key] ? ` ${key} ` : ` `;
+    }
+    return srtClassName;
+}
+
+export function type(ele: any): string {
+    return typeof ele;
+}
+
+export function setClassObj(arrs: any, to: Object = {}, val: any, pre: string = '') {
+    if (type(arrs) === 'string') {
+        arrs = arrs.split(',');
+    }
+    arrs.map((arr, index) => {
+        to[`${pre}-${arr}`] = val === arr;
+    });
+    return to;
+}
