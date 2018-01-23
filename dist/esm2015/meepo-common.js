@@ -643,9 +643,6 @@ class HelpersService {
         });
     }
 }
-HelpersService.decorators = [
-    { type: Injectable },
-];
 /** @nocollapse */
 HelpersService.ctorParameters = () => [
     { type: ViewContainerRef, decorators: [{ type: Host },] },
@@ -744,7 +741,6 @@ MeepoCommonModule.decorators = [
                     NgTrueDirective
                 ],
                 providers: [
-                    HelpersService,
                     ClassService,
                     StyleService
                 ]
@@ -1041,6 +1037,40 @@ function isJsObject(o) {
     return o !== null && (typeof o === 'function' || typeof o === 'object');
 }
 const classNames = require('classnames');
+/**
+ * @param {?} obj
+ * @param {?=} srtClassName
+ * @return {?}
+ */
+function ansycClassObj(obj, srtClassName = '') {
+    for (const /** @type {?} */ key in obj) {
+        srtClassName += obj[key] ? ` ${key} ` : ` `;
+    }
+    return srtClassName;
+}
+/**
+ * @param {?} ele
+ * @return {?}
+ */
+function type(ele) {
+    return typeof ele;
+}
+/**
+ * @param {?} arrs
+ * @param {?=} to
+ * @param {?=} val
+ * @param {?=} pre
+ * @return {?}
+ */
+function setClassObj(arrs, to = {}, val, pre = '') {
+    if (type(arrs) === 'string') {
+        arrs = arrs.split(',');
+    }
+    arrs.map((arr, index) => {
+        to[`${pre}-${arr}`] = val === arr;
+    });
+    return to;
+}
 
 /**
  * @fileoverview added by tsickle
@@ -1055,7 +1085,7 @@ const classNames = require('classnames');
  * Generated bundle index. Do not edit.
  */
 
-export { MeepoCommonModule, ClassService, ComponentOutletService, HelperService, HelpersService, StyleService, TemplateOutletService, _global as global, NgEachOf, NgEachOfContext, NgTrueDirective, NgStartDirective, NgEndDirective, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, isPromise, isObservable, isType, isComponentView, isEmbeddedView, stringify, looseIdentical, getSymbolIterator, isListLikeIterable, areIterablesEqual, iterateListLike, isJsObject, classNames };
+export { MeepoCommonModule, ClassService, ComponentOutletService, HelperService, HelpersService, StyleService, TemplateOutletService, _global as global, NgEachOf, NgEachOfContext, NgTrueDirective, NgStartDirective, NgEndDirective, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, isPromise, isObservable, isType, isComponentView, isEmbeddedView, stringify, looseIdentical, getSymbolIterator, isListLikeIterable, areIterablesEqual, iterateListLike, isJsObject, classNames, ansycClassObj, type, setClassObj };
 export { Scheduler } from 'rxjs/Scheduler';
 export { Subject } from 'rxjs/Subject';
 export { BehaviorSubject } from 'rxjs/BehaviorSubject';

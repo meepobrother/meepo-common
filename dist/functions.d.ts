@@ -42,3 +42,6 @@ export declare function iterateListLike(obj: any, fn: (p: any) => any): void;
 export declare function isJsObject(o: any): boolean;
 declare const classNames: any;
 export { classNames };
+export declare function ansycClassObj(obj: any, srtClassName?: string): string;
+export declare function type(ele: any): string;
+export declare function setClassObj(arrs: any, to: Object, val: any, pre?: string): Object;

@@ -644,9 +644,6 @@ var HelpersService = /** @class */ (function () {
     };
     return HelpersService;
 }());
-HelpersService.decorators = [
-    { type: core.Injectable },
-];
 /** @nocollapse */
 HelpersService.ctorParameters = function () { return [
     { type: core.ViewContainerRef, decorators: [{ type: core.Host },] },
@@ -751,7 +748,6 @@ MeepoCommonModule.decorators = [
                     NgTrueDirective
                 ],
                 providers: [
-                    HelpersService,
                     ClassService,
                     StyleService
                 ]
@@ -1045,6 +1041,43 @@ function isJsObject(o) {
     return o !== null && (typeof o === 'function' || typeof o === 'object');
 }
 var classNames = require('classnames');
+/**
+ * @param {?} obj
+ * @param {?=} srtClassName
+ * @return {?}
+ */
+function ansycClassObj(obj, srtClassName) {
+    if (srtClassName === void 0) { srtClassName = ''; }
+    for (var /** @type {?} */ key in obj) {
+        srtClassName += obj[key] ? " " + key + " " : " ";
+    }
+    return srtClassName;
+}
+/**
+ * @param {?} ele
+ * @return {?}
+ */
+function type(ele) {
+    return typeof ele;
+}
+/**
+ * @param {?} arrs
+ * @param {?=} to
+ * @param {?=} val
+ * @param {?=} pre
+ * @return {?}
+ */
+function setClassObj(arrs, to, val, pre) {
+    if (to === void 0) { to = {}; }
+    if (pre === void 0) { pre = ''; }
+    if (type(arrs) === 'string') {
+        arrs = arrs.split(',');
+    }
+    arrs.map(function (arr, index) {
+        to[pre + "-" + arr] = val === arr;
+    });
+    return to;
+}
 
 exports.MeepoCommonModule = MeepoCommonModule;
 exports.ClassService = ClassService;
@@ -1089,6 +1122,9 @@ exports.areIterablesEqual = areIterablesEqual;
 exports.iterateListLike = iterateListLike;
 exports.isJsObject = isJsObject;
 exports.classNames = classNames;
+exports.ansycClassObj = ansycClassObj;
+exports.type = type;
+exports.setClassObj = setClassObj;
 exports.Scheduler = Scheduler.Scheduler;
 exports.Subject = Subject.Subject;
 exports.BehaviorSubject = BehaviorSubject.BehaviorSubject;
