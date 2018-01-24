@@ -1108,6 +1108,65 @@ function setClassObj(arrs, to, val, pre) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
+var Scroller = /** @class */ (function () {
+    /**
+     * @param {?} ele
+     */
+    function Scroller(ele) {
+        this.ele = ele;
+    }
+    /**
+     * @return {?}
+     */
+    Scroller.prototype.getViewportScrollPosition = function () {
+        var /** @type {?} */ ele = this.ele.nativeElement;
+        var /** @type {?} */ documentRect = ele.getBoundingClientRect();
+        var /** @type {?} */ top = -documentRect.top || ele.scrollTop || 0;
+        var /** @type {?} */ left = -documentRect.left || ele.scrollLeft || 0;
+        return { top: top, left: left };
+    };
+    /**
+     * @return {?}
+     */
+    Scroller.prototype._updateViewportSize = function () {
+        this._viewportSize = {
+            width: this.ele.nativeElement.offsetWidth,
+            height: this.ele.nativeElement.offsetHeight
+        };
+    };
+    /**
+     * @return {?}
+     */
+    Scroller.prototype.getViewportSize = function () {
+        if (!this._viewportSize || !this._viewportSize.height || !this._viewportSize.width) {
+            this._updateViewportSize();
+        }
+        return {
+            width: this._viewportSize.width,
+            height: this._viewportSize.height
+        };
+    };
+    /**
+     * @return {?}
+     */
+    Scroller.prototype.getViewportRect = function () {
+        var /** @type {?} */ scrollPosition = this.getViewportScrollPosition();
+        var _a = this.getViewportSize(), width = _a.width, height = _a.height;
+        return {
+            top: scrollPosition.top,
+            left: scrollPosition.left,
+            bottom: scrollPosition.top + height,
+            right: scrollPosition.left + width,
+            height: height,
+            width: width,
+        };
+    };
+    return Scroller;
+}());
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -1115,7 +1174,7 @@ function setClassObj(arrs, to, val, pre) {
 /**
  * Generated bundle index. Do not edit.
  */
-export { MeepoCommonModule, ClassService, ComponentOutletService, HelperService, HelpersService, StyleService, TemplateOutletService, _global as global, NgEachOf, NgEachOfContext, NgTrueDirective, NgStartDirective, NgEndDirective, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, isPromise, isObservable, isType, isComponentView, isEmbeddedView, stringify, looseIdentical, getSymbolIterator, isListLikeIterable, areIterablesEqual, iterateListLike, isJsObject, classNames, ansycClassObj, type, setClassObj };
+export { MeepoCommonModule, ClassService, ComponentOutletService, HelperService, HelpersService, StyleService, TemplateOutletService, _global as global, NgEachOf, NgEachOfContext, NgTrueDirective, NgStartDirective, NgEndDirective, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, isPromise, isObservable, isType, isComponentView, isEmbeddedView, stringify, looseIdentical, getSymbolIterator, isListLikeIterable, areIterablesEqual, iterateListLike, isJsObject, classNames, ansycClassObj, type, setClassObj, Scroller };
 export { Scheduler } from 'rxjs/Scheduler';
 export { Subject } from 'rxjs/Subject';
 export { BehaviorSubject } from 'rxjs/BehaviorSubject';

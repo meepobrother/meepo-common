@@ -1076,6 +1076,65 @@ function setClassObj(arrs, to = {}, val, pre = '') {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
+class Scroller {
+    /**
+     * @param {?} ele
+     */
+    constructor(ele) {
+        this.ele = ele;
+    }
+    /**
+     * @return {?}
+     */
+    getViewportScrollPosition() {
+        const /** @type {?} */ ele = this.ele.nativeElement;
+        const /** @type {?} */ documentRect = ele.getBoundingClientRect();
+        const /** @type {?} */ top = -documentRect.top || ele.scrollTop || 0;
+        const /** @type {?} */ left = -documentRect.left || ele.scrollLeft || 0;
+        return { top, left };
+    }
+    /**
+     * @return {?}
+     */
+    _updateViewportSize() {
+        this._viewportSize = {
+            width: this.ele.nativeElement.offsetWidth,
+            height: this.ele.nativeElement.offsetHeight
+        };
+    }
+    /**
+     * @return {?}
+     */
+    getViewportSize() {
+        if (!this._viewportSize || !this._viewportSize.height || !this._viewportSize.width) {
+            this._updateViewportSize();
+        }
+        return {
+            width: this._viewportSize.width,
+            height: this._viewportSize.height
+        };
+    }
+    /**
+     * @return {?}
+     */
+    getViewportRect() {
+        const /** @type {?} */ scrollPosition = this.getViewportScrollPosition();
+        const { width, height } = this.getViewportSize();
+        return {
+            top: scrollPosition.top,
+            left: scrollPosition.left,
+            bottom: scrollPosition.top + height,
+            right: scrollPosition.left + width,
+            height,
+            width,
+        };
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 
 /**
  * @fileoverview added by tsickle
@@ -1085,7 +1144,7 @@ function setClassObj(arrs, to = {}, val, pre = '') {
  * Generated bundle index. Do not edit.
  */
 
-export { MeepoCommonModule, ClassService, ComponentOutletService, HelperService, HelpersService, StyleService, TemplateOutletService, _global as global, NgEachOf, NgEachOfContext, NgTrueDirective, NgStartDirective, NgEndDirective, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, isPromise, isObservable, isType, isComponentView, isEmbeddedView, stringify, looseIdentical, getSymbolIterator, isListLikeIterable, areIterablesEqual, iterateListLike, isJsObject, classNames, ansycClassObj, type, setClassObj };
+export { MeepoCommonModule, ClassService, ComponentOutletService, HelperService, HelpersService, StyleService, TemplateOutletService, _global as global, NgEachOf, NgEachOfContext, NgTrueDirective, NgStartDirective, NgEndDirective, isMeepoTrue, isTrueProperty, isCheckedProperty, isBoolean, isString, isNumber, isFunction, isDefined, isUndefined, isPresent, isBlank, isObject, isArray, isFinite, isNaN, isWindow, isDocument, isPromise, isObservable, isType, isComponentView, isEmbeddedView, stringify, looseIdentical, getSymbolIterator, isListLikeIterable, areIterablesEqual, iterateListLike, isJsObject, classNames, ansycClassObj, type, setClassObj, Scroller };
 export { Scheduler } from 'rxjs/Scheduler';
 export { Subject } from 'rxjs/Subject';
 export { BehaviorSubject } from 'rxjs/BehaviorSubject';
