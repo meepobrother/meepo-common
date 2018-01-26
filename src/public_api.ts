@@ -2,7 +2,7 @@ export { MeepoCommonModule } from './common.module';
 export * from './rxjs';
 export * from './functions';
 export * from './classes/scroller';
-
+export * from './guid';
 export {
     ClassService, ComponentOutletService, HelperService,
     HelpersService, StyleService, TemplateOutletService

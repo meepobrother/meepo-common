@@ -1137,6 +1137,22 @@ var Scroller = /** @class */ (function () {
     };
     return Scroller;
 }());
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @return {?}
+ */
+function guid() {
+    /**
+     * @return {?}
+     */
+    function S4() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    }
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
 
 exports.MeepoCommonModule = MeepoCommonModule;
 exports.ClassService = ClassService;
@@ -1185,6 +1201,7 @@ exports.ansycClassObj = ansycClassObj;
 exports.type = type;
 exports.setClassObj = setClassObj;
 exports.Scroller = Scroller;
+exports.guid = guid;
 exports.Scheduler = Scheduler.Scheduler;
 exports.Subject = Subject.Subject;
 exports.BehaviorSubject = BehaviorSubject.BehaviorSubject;
